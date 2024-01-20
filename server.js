@@ -1,21 +1,17 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-
-'use strict';
-
-const express = require('express');
-
-// Constants
-const PORT = 3000;
-const HOST = '0.0.0.0';
-
-// App
-const app = express();
-app.get('/', (req, res) => {
-	res.send('Hello remote world!\n');
+const http = require("http");
+let count = 0;
+const server = http.createServer((req, res) => {
+	log(count);
+	res.statusCode = 200;
+	res.setHeader("Content-Type", "text/plain");
+	res.write("hello\n");
+	setTimeout(() => {
+		res.end("NODE.JS");
+	}, 2000);
 });
 
-app.listen(PORT, HOST);
-console.log(`Running on http://${HOST}:${PORT}`);
+function log(count) {
+	console.log((count += 1));
+}
+
+server.listen(8000, () => console.log("Hello Node.js"));
